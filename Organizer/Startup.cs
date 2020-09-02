@@ -8,12 +8,13 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
-using Organizer.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccess.Model;
 using DataAccess.Data;
+using BusinessLogic.IServices;
+using BusinessLogic.Logic;
 
 namespace Organizer
 {
@@ -36,6 +37,8 @@ namespace Organizer
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<OrgDbContext>();
             services.AddRazorPages();
+            services.AddTransient<IAccountService, DBAccount>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

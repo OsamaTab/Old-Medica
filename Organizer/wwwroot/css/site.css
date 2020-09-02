@@ -1,6 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -60,7 +61,7 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+
 }
 .footer {
   position: absolute;
@@ -68,4 +69,35 @@ body {
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+.carousel-inner > .item > a > img, .carousel-inner > .item > img, .img-responsive, .thumbnail a > img, .thumbnail > img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+.item1 {
+    grid-area: main;
+}
+
+.item2 {
+    grid-area: Appointment;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-areas: ' main main Appointment';
+    grid-gap: 12px;
+    padding: 25px 20px;
+}
+
+@media(max-width: 1000px) {
+    .grid-container {
+        display: block;
+        padding: 20px 0;
+    }
+}
+
+.main-coler {
+    background-color: #26272b;
 }

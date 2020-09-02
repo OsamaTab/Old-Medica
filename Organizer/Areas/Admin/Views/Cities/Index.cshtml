@@ -1,11 +1,16 @@
-﻿@model IEnumerable<DataAccess.ViewModel.UserViewModel>
+﻿@model IEnumerable<DataAccess.Model.City>
+
 @{
     ViewData["Title"] = "Index";
 }
 
+
 <div class="content">
     <div class="row">
         <div class="col-md-12">
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
             <div class="card ">
                 <div class="card-header">
                     <h4 class="card-title"> Simple Table</h4>
@@ -16,17 +21,14 @@
                             <thead class=" text-primary">
                                 <tr>
                                     <th>
-                                        @Html.DisplayNameFor(model => model.UserName)
+                                        @Html.DisplayNameFor(model => model.CityName)
 
                                     </th>
-                                    <th>
-                                        @Html.DisplayNameFor(model => model.RoleName)
 
-                                    </th>
                                     <th>
                                         Action
                                     </th>
-                                   
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -35,19 +37,17 @@
 
                                     <tr>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.UserName)
+                                            @Html.DisplayFor(modelItem => item.CityName)
                                         </td>
+                                        
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.RoleName)
-                                        </td>
-                                        <td>
-                                            <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                                            <form class="d-inline-flex" asp-action="Delete" asp-route-id="@item.UserId">
+                                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                            <form class="d-inline-flex" asp-action="Delete" asp-route-id="@item.Id">
 
                                                 <input style="padding: 0; border: none; background: none;" type="submit" value="Delete" class="btn text-danger btn-sm p-0" />
                                             </form>
                                         </td>
-                                      
+
                                     </tr>
                                 }
                             </tbody>

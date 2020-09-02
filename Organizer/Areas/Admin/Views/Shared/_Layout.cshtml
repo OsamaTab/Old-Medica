@@ -18,7 +18,7 @@
             position:inherit;
         }
         .perfect-scrollbar-on .sidebar, .perfect-scrollbar-on .main-panel {
-            height: calc(98vh - 90px);
+            /*height: calc(98vh - 90px);*/
         }
     </style>
 </head>
@@ -30,11 +30,9 @@
         -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="simple-text logo-mini">
-                        CT
-                    </a>
-                    <a asp-area="" asp-controller="Home" asp-action="Index" class="simple-text logo-normal">
-                        Creative Tim
+                    
+                    <a asp-area="admin" asp-controller="Home" asp-action="Index" class="simple-text logo-normal text-center">
+                        Dashboard
                     </a>
                 </div>
                 <ul class="nav">
@@ -48,6 +46,16 @@
                         <a asp-area="admin" asp-controller="Account" asp-action="Index">
                             <i class="tim-icons icon-chart-pie-36"></i>
                             <p>Users</p>
+                        </a>
+                    </li><li class="">
+                        <a asp-area="admin" asp-controller="Specialties" asp-action="Index">
+                            <i class="tim-icons icon-chart-pie-36"></i>
+                            <p>Specialty</p>
+                        </a>
+                    </li><li class="">
+                        <a asp-area="admin" asp-controller="Cities" asp-action="Index">
+                            <i class="tim-icons icon-chart-pie-36"></i>
+                            <p>Citys</p>
                         </a>
                     </li>
                 </ul>
@@ -65,7 +73,7 @@
                                 <span class="navbar-toggler-bar bar3"></span>
                             </button>
                         </div>
-                        <a class="navbar-brand" href="javascript:void(0)">Dashboard</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" >HomePage</a>
                     </div>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar navbar-kebab"></span>

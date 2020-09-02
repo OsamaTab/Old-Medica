@@ -1,0 +1,257 @@
+﻿.animation-area {
+    background: linear-gradient(132deg, #ec5218, #1665c1);
+    background-size: 400% 400%;
+    width: 100%;
+    height: 100vh;
+    animation: back 20s ease infinite;
+}
+
+@keyframes back {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.box-area {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /*padding-top: 100vh;*/
+}
+
+    .box-area li {
+        position: absolute;
+        display: block;
+        list-style: none;
+        width: 25px;
+        height: 25px;
+        background: rgba(23, 23, 23, 0.3);
+        animation: animate 20s linear infinite;
+    }
+
+        .box-area li:nth-child(1) {
+            left: 86%;
+            width: 80px;
+            height: 80px;
+            animation-delay: 0s;
+            bottom:10%;
+        }
+
+        .box-area li:nth-child(2) {
+            left: 12%;
+            width: 30px;
+            height: 30px;
+            animation-delay: 1.5s;
+            animation-duration: 10s;
+            bottom: 20%;
+        }
+
+        .box-area li:nth-child(3) {
+            left: 70%;
+            width: 100px;
+            height: 100px;
+            animation-delay: 5.5s;
+            bottom: 1%;
+        }
+
+        .box-area li:nth-child(4) {
+            left: 42%;
+            width: 100px;
+            height: 150px;
+            animation-delay: 0;
+            animation-duration: 15s;
+            bottom: 30%;
+        }
+
+        .box-area li:nth-child(5) {
+            left: 65%;
+            width: 40px;
+            height: 40px;
+            animation-delay: 0;
+            bottom: 10%;
+        }
+
+        .box-area li:nth-child(6) {
+            left: 15%;
+            width: 110px;
+            height: 110px;
+            animation-delay: 3.5s;
+            bottom: 50%;
+        }
+
+@keyframes animate {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-800px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+body .footer {
+    z-index: 1;
+    --footer-background: #262626;
+    display: grid;
+    position: relative;
+    grid-area: footer;
+    min-height: 12rem;
+}
+
+    body .footer .bubbles {
+        width: 95%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1rem;
+        background: linear-gradient(132deg, #ec5218, #1665c1);
+        background-size: 400% 400%;
+        animation: back 20s ease infinite;
+        -webkit-filter: url("#blob");
+        filter: url("#blob");
+    }
+
+@media (max-width: 600px) {
+    body .footer .bubbles {
+        width: 90%;
+        visibility: hidden;
+        display: none;
+    }
+}
+
+body .footer .bubbles .bubble {
+    position: absolute;
+    left: var(--position, 50%);
+    background: #262626;
+    border-radius: 100%;
+    -webkit-animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+    animation: bubble-size var(--time, 4s) ease-in infinite var(--delay, 0s), bubble-move var(--time, 4s) ease-in infinite var(--delay, 0s);
+    -webkit-transform: translate(-50%, 100%);
+    transform: translate(-50%, 100%);
+}
+
+body .footer .content {
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    /*grid-gap: 4rem;*/
+    padding: 1rem 2rem 0;
+    background: var(--footer-background);
+}
+
+
+
+
+@-webkit-keyframes bubble-size {
+    0%, 75% {
+        width: var(--size, 4rem);
+        height: var(--size, 4rem);
+    }
+
+    100% {
+        width: 0rem;
+        height: 0rem;
+    }
+}
+
+@keyframes bubble-size {
+    0%, 75% {
+        width: var(--size, 4rem);
+        height: var(--size, 4rem);
+    }
+
+    100% {
+        width: 0rem;
+        height: 0rem;
+    }
+}
+
+@-webkit-keyframes bubble-move {
+    0% {
+        bottom: -4rem;
+    }
+
+    100% {
+        bottom: var(--distance, 10rem);
+    }
+}
+
+@keyframes bubble-move {
+    0% {
+        bottom: -4rem;
+    }
+
+    100% {
+        bottom: var(--distance, 10rem);
+    }
+}
+
+.typewriter {
+    width:990px;
+    padding:30px 0 15px 30px ;
+   
+}
+
+    .typewriter h1 {
+        font-size: -webkit-xxx-large;
+        color: #fff;
+        font-family: monospace;
+        overflow: hidden; /* Ensures the content is not revealed until the animation */
+        border-right: .15em solid orange; /* The typwriter cursor */
+        white-space: nowrap; /* Keeps the content on a single line */
+        margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+        letter-spacing: .15em; /* Adjust as needed */
+        animation: typing 3.5s steps(30, end), blink-caret .5s step-end infinite;
+    }
+
+/* The typing effect */
+@keyframes typing {
+    from {
+        width: 0
+    }
+
+    to {
+        width: 100%
+    }
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+    from, to {
+        border-color: transparent
+    }
+
+    50% {
+        border-color: orange
+    }
+}
+
+@media (max-width: 600px) {
+    html {
+        zoom: 100%;
+    }
+
+    .typewriter {
+        width: 100%;
+        margin-left: 0;
+        padding: 30px 0 15px 5px;
+    }
+
+        .typewriter h1 {
+            font-size: 1.3rem;
+        }
+}
