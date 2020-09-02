@@ -15,6 +15,7 @@ using DataAccess.Model;
 using DataAccess.Data;
 using BusinessLogic.IServices;
 using BusinessLogic.Logic;
+using ReflectionIT.Mvc.Paging;
 
 namespace Organizer
 {
@@ -38,7 +39,7 @@ namespace Organizer
                 .AddEntityFrameworkStores<OrgDbContext>();
             services.AddRazorPages();
             services.AddTransient<IAccountService, DBAccount>();
-
+            services.AddPaging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

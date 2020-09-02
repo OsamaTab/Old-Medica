@@ -46,6 +46,26 @@ namespace DataAccess.Data
                     userManager.AddToRoleAsync(user, "Admin").Wait();
                 }
             }
+            for (int i = 1; i <= 12; i++)
+            {
+                string email = "Doctor{0}@i.com";
+                string emails = string.Format(email, i);
+                if (userManager.FindByEmailAsync(emails).Result == null)
+                {
+                    ApplicationUser user = new ApplicationUser
+                    {
+                        UserName = emails,
+                        Email = emails
+                    };
+
+                    IdentityResult result = userManager.CreateAsync(user, "Qwe123/").Result;
+
+                    if (result.Succeeded)
+                    {
+                        userManager.AddToRoleAsync(user, "Doctors").Wait();
+                    }
+                }
+            }
         }
      
     }

@@ -81,8 +81,11 @@
 
             @foreach (var patient in Model)
             {
+                var random = new Random();
+                var list = new List<string> { "Red", "Cyan", "Light-Blue", "Deep-Purple", "Blue", "Pink", "Purple", "Indigo", "Teal", "Green", "Light-Green", "Yellow", "Amber", "Orange", "Deep-Orange", "Brown", "Grey", "Blue-Grey" };
+                int index = random.Next(list.Count);
                 <div class="col-md-3 col-sm-6 col-xs-12">
-                    <article class="material-card Red">
+                    <article class="material-card @list[index]">
                         <h2>
                             <span>
                                 @Html.DisplayFor(modelItem => patient.Name)
@@ -95,7 +98,7 @@
                         <div class="mc-content">
                             <div class="img-container " style="border-radius:10px 10px 0 0">
                                 <a asp-controller="Patients" asp-action="Details" asp-route-id="@patient.Id">
-                                    <img class="img-responsive" src="http://u.lorenzoferrara.net/marlenesco/material-card/thumb-christopher-walken.jpg">
+                                    <img class="img-responsive" src="https://picsum.photos/id/@random.Next(500)/300/500">
                                 </a>
                             </div>
                             <div class="mc-description">

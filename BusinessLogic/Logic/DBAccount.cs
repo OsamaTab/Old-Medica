@@ -3,6 +3,7 @@ using DataAccess.Data;
 using DataAccess.Model;
 using DataAccess.ViewModel;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,10 +76,32 @@ namespace BusinessLogic.Logic
                 await _userManager.AddToRoleAsync(user, role.Name);
             }
         }
+
+        public async Task<List<ApplicationUser>> GetFilterdDoctors(string? search, int? specialty, int? city)
+        {
+            var docters = await _userManager.GetUsersInRoleAsync("Doctors");
+   
+            if (specialty != null)
+            {
+                docters = docters.Where(s => s.SpecialtyId == specialty).ToList();
+            }
+            if (city != null)
+            {
+                docters = docters.Where(s => s.CityId == city).ToList();
+            }
+            if (!String.IsNullOrEmpty(search))
+            {
+                docters = docters.Where(s => s.UserName.Contains(search)).ToList();
+            }
+
+            return docters.ToList();
+        }
+
         public async Task Delete(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
             await _userManager.DeleteAsync(user);
         }
+
     }
 }

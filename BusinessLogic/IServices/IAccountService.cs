@@ -14,6 +14,8 @@ namespace BusinessLogic.IServices
         public Task<List<UserViewModel>> GetUsers();
         public Task<List<ApplicationUser>> GetDoctors();
 
+        public Task<List<ApplicationUser>> GetFilterdDoctors(string? search,int? specialty,int? city);
+
         public Task Edit(string userId, UserViewModel model);
         public Task Delete(string id);
     }

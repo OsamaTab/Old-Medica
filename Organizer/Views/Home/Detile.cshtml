@@ -124,20 +124,28 @@
         <div id="map" class="h-100 w-100"></div>
     </div>
 </div>
-<h1 class="text-center text-white-50 pb-4">Gallery</h1>
-
+<h1 class="text-center text-white-50 pb-4" style="text-shadow: 3px 3px 11px #000000;
+    ">Gallery</h1>
+@{
+    var random = new Random();
+}
 <div class="slideshow-container">
 
     <div class="mySlides fade1">
 
-        <img src="https://ichef.bbci.co.uk/news/1024/cpsprodpb/13AAD/production/_113475508__110894880_gettyimages-1055182908.jpg" style="border-radius: 12px; width: 100%">
-        
+        <img src="https://picsum.photos/id/@random.Next(1080)/1600/800" style="border-radius: 12px; width: 100%">
+
     </div>
 
     <div class="mySlides fade1">
 
-        <img src="https://ichef.bbci.co.uk/news/1024/cpsprodpb/13AAD/production/_113475508__110894880_gettyimages-1055182908.jpg" style="border-radius: 12px; width: 100%">
-        
+        <img src="https://picsum.photos/id/@random.Next(1080)/1600/800" style="border-radius: 12px; width: 100%">
+
+    </div>
+    <div class="mySlides fade1">
+
+        <img src="https://picsum.photos/id/@random.Next(1080)/1600/800" style="border-radius: 12px; width: 100%">
+
     </div>
 
     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
