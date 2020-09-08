@@ -99,5 +99,18 @@ body {
 }
 
 .main-coler {
-    background-color: #26272b;
+    background-color: #fff !important;
+    color:#000 !important;
+}
+.radius{
+    border-radius:12px;
+}
+
+@media (min-width: 1400px) {
+    .container {
+        max-width: 1300px !important;
+    }
+    .item1{
+        min-width:120vh;
+    }
 }

@@ -28,6 +28,13 @@ namespace DataAccess.Data
                 role.NormalizedName = "Doctors".ToUpper();
                 IdentityResult roleResult = roleManager.CreateAsync(role).Result;
             }
+            if (!roleManager.RoleExistsAsync("User").Result)
+            {
+                IdentityRole role = new IdentityRole();
+                role.Name = "User";
+                role.NormalizedName = "User".ToUpper();
+                IdentityResult roleResult = roleManager.CreateAsync(role).Result;
+            }
         }
         public static void SeedUsers(UserManager<ApplicationUser> userManager)
         {
@@ -48,13 +55,15 @@ namespace DataAccess.Data
             }
             for (int i = 1; i <= 12; i++)
             {
+                string userName = "Doctor{0}";
                 string email = "Doctor{0}@i.com";
+                string userNames = string.Format(userName, i);
                 string emails = string.Format(email, i);
                 if (userManager.FindByEmailAsync(emails).Result == null)
                 {
                     ApplicationUser user = new ApplicationUser
                     {
-                        UserName = emails,
+                        UserName = userNames,
                         Email = emails
                     };
 

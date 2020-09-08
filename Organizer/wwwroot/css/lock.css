@@ -1,0 +1,102 @@
+﻿* {
+  box-sizing: border-box;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+.denied .container {    
+    text-align: center;
+    padding: 10px;
+    min-width: 300px;
+  margin:22vh auto;
+}
+
+    .denied .container .lock {
+        display: inline-block;
+        opacity: 1;
+    }
+    .denied .container h1 {
+        font-family: 'Comfortaa', cursive;
+        font-size: 100px;
+        text-align: center;
+        color: #eee;
+        font-weight: 100;
+        margin: 0;
+    }
+
+.lock {
+  -webkit-transition: 0.5s ease;
+  transition: 0.5s ease;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+}
+.lock.generated {
+  -webkit-transform: scale(0.5);
+          transform: scale(0.5);
+  position: absolute;
+  -webkit-animation: 2s move linear;
+          animation: 2s move linear;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+          z-index:-2;
+}
+.lock ::after {
+  content: '';
+  background: #a74006;
+  opacity: 0.3;
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 50%;
+  top: 0;
+  left: 0;
+}
+.lock .bottom {
+  background: #D68910;
+  height: 40px;
+  width: 60px;
+  display: block;
+  position: relative;
+  margin: 0 auto;
+}
+.lock .top {
+  height: 60px;
+  width: 50px;
+  border-radius: 50%;
+  border: 10px solid #fff;
+  display: block;
+  position: relative;
+  top: 30px;
+  margin: 0 auto;
+}
+.lock .top::after {
+  padding: 10px;
+  border-radius: 50%;
+}
+
+@-webkit-keyframes move {
+  to {
+    top: 100%;
+  }
+}
+
+@keyframes move {
+  to {
+    top: 100%;
+  }
+}
+@media (max-width: 420px) {
+ 
+
+  .lock.generated {
+    -webkit-transform: scale(0.3);
+            transform: scale(0.3);
+  }
+}

@@ -1,6 +1,7 @@
 ﻿@using ReflectionIT.Mvc.Paging;
 @model PagingList<DataAccess.Model.ApplicationUser>
 @addTagHelper*,ReflectionIT.Mvc.Paging
+@inject SignInManager<DataAccess.Model.ApplicationUser> SignInManager
 
 @{
     ViewData["Title"] = "Index";
@@ -9,82 +10,20 @@
 @section Link{
     <link href="~/css/card.css" rel="stylesheet" />
     <link href="~/css/search.css" rel="stylesheet" />
-    <style>
-        .package-schedules {
-            width: 90%;
-            margin: 0 auto;
-            margin-bottom: 3vh;
-        }
-
-            .package-schedules article {
-                margin: 15px 0;
-                background-color: #fff;
-                position: relative;
-            }
-
-        .on-hold-arrival {
-            border-left: 5px solid #fda84b;
-        }
-
-        .pickup-appointment {
-            border-left: 5px solid #67c;
-        }
-
-        .package-schedules article p {
-            display: inline-block;
-            padding: 15px;
-        }
-
-        .package-schedules article:nth-child(3) {
-            margin-bottom: 0;
-        }
-
-            .package-schedules article:nth-child(3):after {
-                content: "";
-                border-bottom: 1px solid #ccc;
-                width: 95%;
-                position: absolute;
-                bottom: 0;
-                left: 15px;
-                z-index: 1;
-            }
-
-        .package-schedules article:nth-child(4) {
-            margin: 0 auto;
-        }
-
-        .package-schedules p:first-child {
-            width: 60px;
-            text-align: center;
-            padding: 0;
-            border-right: 1px solid #ccc;
-        }
-        .paging ul {
-            margin: auto;
-            padding-top: 30px;
-            width: fit-content;
-        }
-            .paging ul li {
-                background-color: #1b1818;
-                padding: 9px 20px;
-                border-radius: 12px;
-                margin: 2px;
-            }
-            .paging ul li a{
-              color: #fff;
-                
-            }
-    </style>
 }
-
-<div class="typewriter text-center">
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="typewriter text-center">
         <h1>
             SignUp To Have An Appointment <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Register">Sign Up</a>
         </h1>
-        
+
     </div>
+}
+
 <div class="grid-container">
-    <div class=" item1 shadow main-coler p-md-5 p-2" style="border-radius:10px">
+    <div class=" item1 shadow main-coler pb-3 px-md-5 px-2 radius" >
+        <h1 class="text-center py-3 ">Doctors</h1>
         <div class="row">
             <div class="col-lg-6 col-12">
                 <form class="search p-0 m-0">
@@ -95,7 +34,7 @@
             <div class="col-lg-3 col-6 mb-3">
                 <form asp-controller="Home" asp-action="Index" id="filterForm" class="">
                     <div class="form-group m-0 ">
-                        <select id="Specialty" name="specialty" class="form-control text-white-50" style="height:45px;border-radius:10px;background-color:#2D2D2D" asp-items="ViewBag.SpecialtyId">
+                        <select id="Specialty" name="specialty" class="form-control text-dark-50" style="height:45px;border-radius:10px" asp-items="ViewBag.SpecialtyId">
                             <option value="" selected>Filter by Specialty</option>
                         </select>
                     </div>
@@ -104,7 +43,7 @@
             <div class="col-lg-3 col-6 mb-3">
                 <form asp-controller="Home" asp-action="Index" id="filterForm1" class="">
                     <div class="form-group m-0 ">
-                        <select id="City" name="city" class="form-control text-white-50" style="height:45px;border-radius:10px;background-color:#2D2D2D" asp-items="ViewBag.CityId">
+                        <select id="City" name="city" class="form-control text-dark-50" style="height:45px;border-radius:10px  " asp-items="ViewBag.CityId">
                             <option value="" selected>Filter by City</option>
                         </select>
                     </div>
@@ -118,7 +57,8 @@
                 var random = new Random();
                 var list = new List<string> { "Red", "Cyan", "Light-Blue", "Deep-Purple", "Blue", "Pink", "Purple", "Indigo", "Teal", "Green", "Light-Green", "Yellow", "Amber", "Orange", "Deep-Orange", "Brown", "Grey", "Blue-Grey" };
                 int index = random.Next(list.Count);
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                var photopath = "/img/profile/" + @user.PhotoPath;
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
                     <article class="material-card @list[index]" onload="color()">
                         <h2>
                             <span>
@@ -131,8 +71,15 @@
                         </h2>
                         <div class="mc-content">
                             <div class="img-container " style="border-radius:10px 10px 0 0">
-                                <a asp-controller="Home" asp-action="Detile">
-                                    <img class="img-responsive" src="https://picsum.photos/id/@random.Next(500)/300/500">
+                                <a asp-controller="Home" asp-action="Detile" asp-route-id="@user.Id">
+                                    @if (user.PhotoPath!=null)
+                                    {
+                                        <img class="img-responsive" src="@photopath">
+                                    }
+                                    else
+                                    {
+                                        <img class="img-responsive" src="https://picsum.photos/id/@random.Next(500)/300/500">
+                                    }
                                 </a>
                             </div>
                             <div class="mc-description">
@@ -156,37 +103,41 @@
             }
 
         </div>
-        <nav class="paging" aria-label="Page navigation example">
-            <vc:pager paging-list="@Model" />
-        </nav>
-       
-    </div>
 
-        <div class=" item2 shadow main-coler mt-4 mt-md-0 pb-4" style="border-radius:10px">
-            <h1 class="text-white px-5 pt-5 pb-3">Your Appointment</h1>
-            <section class="package-schedules p-2">
-                <article class="on-hold-arrival">
-                    <p> <span class="date-header">12</span> <br> <span class="day"> Mon </span></p>
-                    <p><span class="package-stat">Package arrives</span> <br> <span class="sched-desc">From a scrub</span></p>
-                </article>
-                <article class="pickup-appointment">
-                    <p> <span class="date-header">23</span> <br> <span class="day"> Fri </span></p>
-                    <p><span class="package-stat">Pickup appointment</span> <br><span class="sched-desc"> New Jersey's office, Elizabeth</span></p>
-                </article>
-
-                <article class="on-hold-arrival">
-                    <p> <span class="date-header">27</span> <br><span class="day"> Tue </span> </p>
-                    <p> <span class="package-stat">Package on hold </span><br><span class="sched-desc"> On hold until 29 September</span></p>
-                </article>
-                <article class="on-hold-arrival on-hold-arrives">
-                    <p><span class="date-header"> 29 </span> <br> <span class="day">Thu</span></p>
-                    <p><span class="package-stat">Package arrives</span> <br> <span class="sched-desc">From Alibaba</span></p>
-                </article>
-            </section>
-        </div>
+        @if (Model.Count() >= 12 || ViewBag.Page != 1)
+        {
+            <nav class="paging" aria-label="Page navigation example">
+                <vc:pager paging-list="@Model" />
+            </nav>
+        }
 
     </div>
-<div class="container ">
+
+    <div class=" item2 shadow main-coler mt-4 mt-md-0 pb-4 radius" >
+        <h1 class="px-5 pt-5 pb-3">Your Appointment</h1>
+        <section class="package-schedules p-2">
+            <article class="on-hold-arrival radius">
+                <p> <span class="date-header">12</span> <br> <span class="day"> Mon </span></p>
+                <p><span class="package-stat">Package arrives</span> <br> <span class="sched-desc">From a scrub</span></p>
+            </article>
+            <article class="pickup-appointment radius">
+                <p> <span class="date-header">23</span> <br> <span class="day"> Fri </span></p>
+                <p><span class="package-stat">Pickup appointment</span> <br><span class="sched-desc"> New Jersey's office, Elizabeth</span></p>
+            </article>
+
+            <article class="on-hold-arrival ">
+                <p> <span class="date-header">27</span> <br><span class="day"> Tue </span> </p>
+                <p> <span class="package-stat">Package on hold </span><br><span class="sched-desc"> On hold until 29 September</span></p>
+            </article>
+            <article class="on-hold-arrival on-hold-arrives ">
+                <p><span class="date-header"> 29 </span> <br> <span class="day">Thu</span></p>
+                <p><span class="package-stat">Package arrives</span> <br> <span class="sched-desc">From Alibaba</span></p>
+            </article>
+        </section>
+    </div>
+
+</div>
+<div class="container py-lg-5">
     <div class="row">
         <h1 class=" text-white display-3 mx-auto">contact us</h1>
     </div>
@@ -196,25 +147,25 @@
     <div class="row input-container">
         <div class="col-sm-12 p-0">
             <div class="styled-input wide">
-                <input type="text" required />
+                <input class="radius" type="text" required />
                 <label>Name</label>
             </div>
         </div>
         <div class="col-md-6 col-sm-12 p-0">
             <div class="styled-input">
-                <input type="text" required />
+                <input class="radius" type="text" required />
                 <label>Email</label>
             </div>
         </div>
         <div class="col-md-6 col-sm-12 p-0">
             <div class="styled-input" style="float:right;">
-                <input type="text" required />
+                <input class="radius" type="text" required />
                 <label>Phone Number</label>
             </div>
         </div>
         <div class="col-sm-12 p-0">
             <div class="styled-input wide">
-                <textarea required></textarea>
+                <textarea class="radius" required></textarea>
                 <label>Message</label>
             </div>
         </div>
@@ -263,29 +214,29 @@
             $("#filterForm1").submit();
         });
     </script>
-<script>
-    function shuffle(array) {
-        var currentIndex = array.length, temporaryValue, randomIndex;
+    <script>
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex;
 
-        // While there remain elements to shuffle...
-        while (0 !== currentIndex) {
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
 
-            // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
-            currentIndex -= 1;
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
 
-            // And swap it with the current element.
-            temporaryValue = array[currentIndex];
-            array[currentIndex] = array[randomIndex];
-            array[randomIndex] = temporaryValue;
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
         }
 
-        return array;
-    }
-  
-    function color() {
-        var arr = [Red, Cyan, Light - Blue, Deep - Purple, Blue];
-        $(".addColor").addClass(shuffle(arr));
-    }
-</script>
+        function color() {
+            var arr = [Red, Cyan, Light - Blue, Deep - Purple, Blue];
+            $(".addColor").addClass(shuffle(arr));
+        }
+    </script>
 }

@@ -124,12 +124,12 @@
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;
-    border: 5px solid;
-    width: 54px;
-    height: 54px;
-    line-height: 44px;
+    /*border: 5px solid;*/
+    width: 50px;
+    height: 50px;
+    line-height: 51px;
     text-align: center;
-    color: #fff;
+    color: #fff !important;
     cursor: pointer;
     z-index: 20;
     -webkit-transition: all 0.3s;
@@ -1562,7 +1562,7 @@ h4 {
     font-family: 'Roboto', sans-serif, 'arial';
     font-weight: 400;
     font-size: 20px;
-    color: #9b9b9b;
+    color: #333232;
     line-height: 1.5;
 }
 
@@ -1612,7 +1612,7 @@ textarea {
     border: 0;
     width: 100%;
     font-size: 1rem;
-    background-color: #2d2d2d;
+    background-color: #fff;
     color: white;
     border-radius: 4px;
 }

@@ -12,11 +12,14 @@ namespace BusinessLogic.IServices
     {
         public List<IdentityRole> GetRole();
         public Task<List<UserViewModel>> GetUsers();
+        public Task<ApplicationUser> GetDoctor(string? id);
+
         public Task<List<ApplicationUser>> GetDoctors();
 
         public Task<List<ApplicationUser>> GetFilterdDoctors(string? search,int? specialty,int? city);
 
         public Task Edit(string userId, UserViewModel model);
         public Task Delete(string id);
+
     }
 }

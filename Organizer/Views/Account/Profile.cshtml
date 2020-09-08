@@ -1,0 +1,70 @@
+﻿@model DataAccess.ViewModel.ProfileViewModel
+@{
+    ViewData["Title"] = "Profile";
+}
+<div class="container" >
+
+<div class=" row    ">
+    <div class="col-lg-3  col-6 bg-white radius mx-auto my-5 pt-2 pb-5">
+        <div class="text-center">
+            <img src="/img/profile/@Model.PhotoPath" style="border-radius:50% ;max-width:150px;" alt="" asp-append-version="true" />
+        </div>
+
+    </div>
+        <div class="col-lg-8 col-6 bg-white radius mx-auto my-5 pt-2 pb-4 px-4">
+            <h4 class="text-center py-2">@ViewData["Title"]</h4>
+            <form id="profile-form" method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Profile">
+                <input type="hidden" asp-for="PhotoPath" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group ">
+                    <label for="SpecialtyId" class="control-label">Specialty </label>
+                    <select asp-for="SpecialtyId" class="form-control" asp-items="ViewBag.Specialties">
+                        <option value="" selected>Select Specialty</option>
+                    </select>
+                </div>
+                <div class="form-group ">
+                    <label for="CityId" class="control-label">City </label>
+                    <select asp-for="CityId" class="form-control" asp-items="ViewBag.Cities">
+                        <option value="" selected>Select City</option>
+                    </select>
+                </div>
+                <label>Profile Img</label>
+                <div class="custom-file mb-4">
+                    <input asp-for="Photo" class="custom-file-input" />
+                    <label asp-for="Photo" class="custom-file-label">Chose A Photo....</label>
+                </div>
+                <div class="text-center">
+
+                    <button id="update-profile-button" type="submit" class="btn btn-primary ">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            $(document).ready(function () {
+                $(".custom-file-input").on("change", function () {
+                    var FileName = $(this).val().split('\\').pop();
+                    $(this).next('.custom-file-label').html(FileName);
+                });
+            });
+
+        </script>
+    }

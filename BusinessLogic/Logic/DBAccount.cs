@@ -53,28 +53,23 @@ namespace BusinessLogic.Logic
             }
             return model.ToList();
         }
+        public async Task<ApplicationUser> GetDoctor(string? id)
+        {
+            var doctor = await _userManager.FindByIdAsync(id);
+
+            return doctor;
+        }
         public async Task<List<ApplicationUser>> GetDoctors()
         {
-            var docters = await _userManager.GetUsersInRoleAsync("Doctors");
+            var doctors = await _userManager.GetUsersInRoleAsync("Doctors");
           
-            return docters.ToList();
+            return doctors.ToList();
         }
 
         public List<IdentityRole> GetRole()
         {
             var role = _roleManager.Roles;
             return role.ToList();
-        }
-        public async Task Edit(string userId,UserViewModel model)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            var role = await _roleManager.FindByIdAsync(model.RoleId);
-            user.Email = model.UserName;
-            IdentityResult result = await _userManager.UpdateAsync(user);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, role.Name);
-            }
         }
 
         public async Task<List<ApplicationUser>> GetFilterdDoctors(string? search, int? specialty, int? city)
@@ -95,6 +90,18 @@ namespace BusinessLogic.Logic
             }
 
             return docters.ToList();
+        }
+
+        public async Task Edit(string userId,UserViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            var role = await _roleManager.FindByIdAsync(model.RoleId);
+            user.Email = model.UserName;
+            IdentityResult result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, role.Name);
+            }
         }
 
         public async Task Delete(string id)

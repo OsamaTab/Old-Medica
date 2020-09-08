@@ -38,8 +38,12 @@ namespace Organizer
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<OrgDbContext>();
             services.AddRazorPages();
-            services.AddTransient<IAccountService, DBAccount>();
             services.AddPaging();
+            services.AddTransient<IAccountService, DBAccount>();
+            services.AddTransient<IPatientService, DBPatient>();
+            services.AddTransient<ICommentService, DBComment>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

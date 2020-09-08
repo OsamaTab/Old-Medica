@@ -12,8 +12,11 @@
 
     @RenderSection("Link", required: false)
     <style>
-        .container {
-            max-width: 95% !important;
+        nav .container {
+            max-width: 93% !important;
+        }
+        footer .container {
+            max-width: 93% !important;
         }
     </style>
 </head>
@@ -21,7 +24,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light main-coler  box-shadow ">
             <div class="container">
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">Organizer</a>
+                <a class="navbar-brand main-coler" asp-area="" asp-controller="Home" asp-action="Index">FindDoc</a>
                 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -30,18 +33,25 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link main-coler" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
-                        </li>
+                        @if (User.IsInRole("Doctors"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link main-coler" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item mx-auto">
+                                <a class="nav-link btn btn-primary text-white" asp-area="admin" asp-controller="Home" asp-action="Index">Admin Page</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="">
-        <main>
             <div class="animation-area position-absolute" style="z-index:-5;height:90%">
                 <ul class="box-area">
                     <li></li>
@@ -52,12 +62,14 @@
                     <li></li>
                 </ul>
             </div>
+    <div class="">
+        <main>
             @RenderBody()
         </main>
     </div>
 
     <!-- Site footer -->
-    <footer class="site-footer ">
+    <footer class="site-footer main-coler">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-6">

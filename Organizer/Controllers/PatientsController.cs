@@ -7,23 +7,35 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccess.Data;
 using DataAccess.Model;
+using Microsoft.AspNetCore.Identity;
+using BusinessLogic.IServices;
+using Microsoft.AspNetCore.Authorization;
+using ReflectionIT.Mvc.Paging;
 
 namespace Organizer.Controllers
 {
-    public class PatientsController : Controller
+    public class PatientsController : BassController
     {
         private readonly OrgDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IPatientService _patientService;
 
-        public PatientsController(OrgDbContext context)
+        public PatientsController(OrgDbContext context, UserManager<ApplicationUser> userManager,IPatientService patientService)
         {
             _context = context;
+            _userManager = userManager;
+            _patientService = patientService;
         }
 
         // GET: Patients
-        public async Task<IActionResult> Index()
+        [Authorize(Roles = "Doctors")]
+        public async Task<IActionResult> Index(string? search,int? page=1)
         {
-            var orgDbContext = _context.Patients.Include(p => p.Doctor);
-            return View(await orgDbContext.ToListAsync());
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var patients = _patientService.GetFilterdPatients(search , user.Id);
+            ViewBag.Page = page;
+
+            return View(PagingList.Create(patients, 12, (int)page));
         }
 
         // GET: Patients/Details/5

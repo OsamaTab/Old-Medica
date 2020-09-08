@@ -459,7 +459,7 @@ a, a:hover {
 
 
 .box {
-    margin: 0 10%;
+    /*margin: 0 10%;*/
     height: 630px;
     overflow: hidden;
     padding: 10px 0 40px 60px
@@ -497,7 +497,7 @@ a, a:hover {
             color: #fff;
             border-radius: 10px;
             line-height: 20px;
-            width: 35%
+            width: 90%
         }
 
 
@@ -588,13 +588,13 @@ a, a:hover {
 .box ul:last-of-type .arrow {
     position: absolute;
     top: 105%;
-    left: 22%;
+    left: 16%;
     transform: rotateX(180deg);
     cursor: pointer;
 }
 
 svg {
-    width: 20px;
+  
     height: 20px
 }
 
