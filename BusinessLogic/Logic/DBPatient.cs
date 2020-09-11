@@ -22,6 +22,14 @@ namespace BusinessLogic.Logic
             _context=context;
             _userManager = userManager;
         }
+        public async Task<Patients> GetPatient(int? id)
+        {
+            var patients = await _context.Patients
+                .Include(p => p.Doctor)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            return patients;
+        }
+
         public List<Patients> GetFilterdPatients(string search,string id)
         {
             var patient = from m in _context.Patients.Include(i => i.Doctor).Where(x=>x.DoctorId == id)
@@ -33,5 +41,27 @@ namespace BusinessLogic.Logic
 
             return patient.ToList();
         }
+
+        public async Task Create(ApplicationUser user, Patients patients)
+        {
+            patients.DoctorId = user.Id;
+            _context.Add(patients);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Edit(int id, Patients patients)
+        {
+            var p = _context.Patients.Find(id);
+            patients.DoctorId = p.DoctorId;
+            _context.Update(patients);
+            await _context.SaveChangesAsync();
+        }
+        public async Task Delete(int id)
+        {
+            var patients = await _context.Patients.FindAsync(id);
+            _context.Patients.Remove(patients);
+            await _context.SaveChangesAsync();
+        }
+
     }
 }

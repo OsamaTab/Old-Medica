@@ -256,3 +256,30 @@ body .footer .content {
             font-size: 1.3rem;
         }
 }
+
+.header {
+    position: relative;
+    text-align: center;
+    /*background: linear-gradient(60deg, rgba(84,58,183,1) 0%, rgba(0,172,193,1) 100%);*/
+    background-image: url("https://resize.hswstatic.com/w_1024/gif/becoming-doctor.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: inset -2px -1px 200px -10px black;
+    color: white;
+}
+
+
+.inner-header {
+    height: 80vh;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.flex { /*Flexbox for containers*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using BusinessLogic.IServices;
 using DataAccess.Data;
 using DataAccess.Model;
 using DataAccess.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,61 +21,45 @@ namespace Organizer.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly OrgDbContext _context;
+        private readonly IProfileService _profileService;
 
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IHostingEnvironment hostingEnvironment,OrgDbContext context)
+        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager
+            , IHostingEnvironment hostingEnvironment,OrgDbContext context,IProfileService profileService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _hostingEnvironment = hostingEnvironment;
             _context = context;
+            _profileService = profileService;
         }
+
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> Profile()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var model = new ProfileViewModel
-            {
-                Id = user.Id,
-                UserName = user.UserName,
-                Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
-                PhotoPath = user.PhotoPath,
-                SpecialtyId = user.SpecialtyId,
-                CityId = user.CityId
 
-            };
+            var model = await _profileService.GetProfile(user);
+
             ViewData["Specialties"] = new SelectList(_context.Specialties, "Id", "Name");
             ViewData["Cities"] = new SelectList(_context.Cities, "Id", "CityName");
+
             return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Profile(ProfileViewModel model)
         {
 
             if (ModelState.IsValid)
             {
-                string uniceName = model.PhotoPath;
                 var user = await _userManager.GetUserAsync(HttpContext.User);
-                if (model.Photo != null)
-                {
-                    if (model.PhotoPath != null)
-                    {
-                        string filePath = Path.Combine(_hostingEnvironment.WebRootPath, "img/profile/", model.PhotoPath);
-                        System.IO.File.Delete(filePath);
-                    }
-                    uniceName = FileName(model);
-                }
-                user.UserName = model.UserName;
-                user.Email = model.Email;
-                user.PhoneNumber = model.PhoneNumber;
-                user.PhotoPath = uniceName;
-                user.SpecialtyId = model.SpecialtyId;
-                user.CityId = model.CityId;
 
-                IdentityResult result = await _userManager.UpdateAsync(user);
-                if (result.Succeeded)
+                var result = await _profileService.EditProfile(user, model);
+               
+                if(result.Succeeded)
                 {
                     return RedirectToAction("profile", "Account");
                 }
@@ -82,28 +68,14 @@ namespace Organizer.Controllers
                     ModelState.AddModelError("", error.Description);
                 }
             }
+
             ViewData["Specialties"] = new SelectList(_context.Specialties, "Id", "Name");
             ViewData["Cities"] = new SelectList(_context.Cities, "Id", "CityName");
 
             return View(model);
         }
 
-        private string FileName(ProfileViewModel user)
-        {
-            string uniqueFileName = null;
-            if (user.Photo != null)
-            {
-                string upladeFolder = Path.Combine(_hostingEnvironment.WebRootPath, "img/profile/");
-                uniqueFileName = Guid.NewGuid().ToString() + '_' + user.Photo.FileName;
-                string filePath = Path.Combine(upladeFolder, uniqueFileName);
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    user.Photo.CopyTo(fileStream);
-                }
-            }
-
-            return uniqueFileName;
-        }
+      
 
         [HttpGet]
         public IActionResult Register()
@@ -125,6 +97,7 @@ namespace Organizer.Controllers
             var result = await _userManager.CreateAsync(user, userModel.SignUpPassword);
             if (result.Succeeded)
             {
+                user.PhotoPath = "Blank.png";
                 await _userManager.AddToRoleAsync(user, "User");
                 await _signInManager.SignInAsync(user, isPersistent: true);
                 return RedirectToAction("index", "Home");
@@ -140,7 +113,7 @@ namespace Organizer.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            ViewBag.SignUp = true;
+            ViewBag.SignUp = false;
             return View("/Views/Account/Auth.cshtml");
         }
         [HttpPost]
@@ -149,11 +122,14 @@ namespace Organizer.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(userModel.LogInEmail, userModel.LogInPassword, userModel.RememberMe, false);
-
-                if (result.Succeeded)
+                var user = await _userManager.FindByEmailAsync(userModel.LogInEmail);
+                if (user != null)
                 {
-                    return RedirectToAction("index", "Home");
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, userModel.LogInPassword, userModel.RememberMe, false);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("index", "Home");
+                    }
                 }
 
                 ModelState.AddModelError(string.Empty, "Invalid Login Attempt");

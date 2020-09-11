@@ -42,6 +42,8 @@ namespace Organizer
             services.AddTransient<IAccountService, DBAccount>();
             services.AddTransient<IPatientService, DBPatient>();
             services.AddTransient<ICommentService, DBComment>();
+            services.AddTransient<IProfileService, DBProfile>();
+
 
 
         }

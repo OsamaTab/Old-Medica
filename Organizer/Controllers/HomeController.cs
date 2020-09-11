@@ -31,12 +31,15 @@ namespace Organizer.Controllers
 
         public async Task<IActionResult> Index(string? search, int? specialty, int? city,int? page=1)
         {
-            //var model = await _accountService.GetDoctors();
-            var docters = await _accountService.GetFilterdDoctors(search, specialty, city);
-            
             ViewData["SpecialtyId"] = new SelectList(_context.Specialties, "Id", "Name");
             ViewData["CityId"] = new SelectList(_context.Cities, "Id", "CityName");
             ViewBag.Page = page;
+            var docters = await _accountService.GetFilterdDoctors(search, specialty, city);
+            bool isAuthenticated = User.Identity.IsAuthenticated;
+            if (!isAuthenticated)
+            {
+                return View("/Views/Home/Main.cshtml",PagingList.Create(docters, 12, (int)page));
+            }
             return View(PagingList.Create(docters, 12, (int)page));
         }
         public async Task<IActionResult> Detile(string id)

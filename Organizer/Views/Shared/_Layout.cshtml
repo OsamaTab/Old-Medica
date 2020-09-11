@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="~/css/footer.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/css/Animation.css" rel="stylesheet" />
-
     @RenderSection("Link", required: false)
+
     <style>
         nav .container {
             max-width: 93% !important;
@@ -22,9 +22,9 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light main-coler  box-shadow ">
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light main-coler shadow-sm  fixed-top scrolling-navbar">
             <div class="container">
-                <a class="navbar-brand main-coler" asp-area="" asp-controller="Home" asp-action="Index">FindDoc</a>
+                <a class="navbar-brand navtext" asp-area="" asp-controller="Home" asp-action="Index">FindDoc</a>
                 <button class="navbar-toggler " type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -33,12 +33,13 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link main-coler" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link navtext" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
+                        
                         @if (User.IsInRole("Doctors"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link main-coler" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
+                                <a class="nav-link navtext" asp-area="" asp-controller="Patients" asp-action="Index">Patients</a>
                             </li>
                         }
                         @if (User.IsInRole("Admin"))
@@ -52,24 +53,24 @@
             </div>
         </nav>
     </header>
-            <div class="animation-area position-absolute" style="z-index:-5;height:90%">
-                <ul class="box-area">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                </ul>
-            </div>
-    <div class="">
+    <div class="animation-area position-absolute" style="z-index:-5;height:90%">
+        <ul class="box-area">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="mt-5">
         <main>
             @RenderBody()
         </main>
     </div>
 
     <!-- Site footer -->
-    <footer class="site-footer main-coler">
+    <footer class="site-footer main-coler shadow">
         <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-6">
@@ -126,7 +127,56 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        // When the user scrolls down 80px from the top of the document, resize the navbar's padding and the logo's font size
+        window.onscroll = function () { scrollFunction() };
 
+        function scrollFunction() {
+            if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+                $("#navbar").css("padding", "0px 10px");
+
+            } else {
+                $("#navbar").css("padding", "4px 10px");
+            }
+        }
+    </script>
+    <script>
+        $(function () {
+            $('.material-card > .mc-btn-action').click(function () {
+                var card = $(this).parent('.material-card');
+                var icon = $(this).children('i');
+                icon.addClass('fa-spin-fast');
+
+                if (card.hasClass('mc-active')) {
+                    card.removeClass('mc-active');
+
+                    window.setTimeout(function () {
+                        icon
+                            .removeClass('fa-arrow-left')
+                            .removeClass('fa-spin-fast')
+                            .addClass('fa-bars');
+
+                    }, 800);
+                } else {
+                    card.addClass('mc-active');
+
+                    window.setTimeout(function () {
+                        icon
+                            .removeClass('fa-bars')
+                            .removeClass('fa-spin-fast')
+                            .addClass('fa-arrow-left');
+
+                    }, 800);
+                }
+            });
+        });
+        $("#Specialty").on('change', function () {
+            $("#filterForm").submit();
+        });
+        $("#City").on('change', function () {
+            $("#filterForm1").submit();
+        });
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

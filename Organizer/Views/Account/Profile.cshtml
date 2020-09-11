@@ -4,14 +4,23 @@
 }
 <div class="container" >
 
-<div class=" row    ">
-    <div class="col-lg-3  col-6 bg-white radius mx-auto my-5 pt-2 pb-5">
+<div class=" row d-flex">
+    <div class="col-lg-3  col-6 bg-white radius mx-4 my-5 p-0 " style="z-index:-2">
         <div class="text-center">
-            <img src="/img/profile/@Model.PhotoPath" style="border-radius:50% ;max-width:150px;" alt="" asp-append-version="true" />
-        </div>
+            <img class="img-responsive" style="position:absolute;z-index:-1;border-radius:12px 12px 0 0" src="https://picsum.photos/600/400">
 
+            <img class="shadow-lg " src="/img/profile/@Model.PhotoPath" style="border-radius:50% ;max-width:200px; margin-top:100px" alt="" asp-append-version="true" />
+            
+
+        </div>
+        <div class="text-center mt-3">
+            <h3>
+                @Html.DisplayFor(modelItem => Model.UserName)
+            </h3>
+
+        </div>
     </div>
-        <div class="col-lg-8 col-6 bg-white radius mx-auto my-5 pt-2 pb-4 px-4">
+        <div class="col-lg-8 col-6 bg-white radius mx-4 my-5 pt-2 pb-4 px-4">
             <h4 class="text-center py-2">@ViewData["Title"]</h4>
             <form id="profile-form" method="post" enctype="multipart/form-data" asp-controller="Account" asp-action="Profile">
                 <input type="hidden" asp-for="PhotoPath" />
