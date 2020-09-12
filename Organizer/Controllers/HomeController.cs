@@ -76,5 +76,6 @@ namespace Organizer.Controllers
             return RedirectToAction("Detile", "Home", new { id = id });
 
         }
+
     }
 }

@@ -12,7 +12,7 @@
 
 
 <div class="grid-container">
-    <div class=" item1 shadow main-coler p-md-5 p-2 radius" >
+    <div class=" item1 shadow main-coler p-md-5 p-2 radius">
         <div class="row">
             <div class="col-lg-9 col-12">
                 <form class="search p-0 m-0">
@@ -26,47 +26,33 @@
 
             </div>
         </div>
-        <div class="row active-with-click">
-
+       
+        <div class="row">
             @foreach (var patient in Model)
             {
+                var photopath = "/img/profile/" + patient.PhotoPath;
                 var random = new Random();
-                var list = new List<string> { "Red", "Cyan", "Light-Blue", "Deep-Purple", "Blue", "Pink", "Purple", "Indigo", "Teal", "Green", "Light-Green", "Yellow", "Amber", "Orange", "Deep-Orange", "Brown", "Grey", "Blue-Grey" };
-                int index = random.Next(list.Count);
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <article class="material-card @list[index]">
-                        <h2>
-                            <span>
-                                @Html.DisplayFor(modelItem => patient.Name)
-                            </span>
-                            <strong>
-                                <i class="fa fa-fw fa-star"></i>
-                                The Deer Hunter
-                            </strong>
-                        </h2>
-                        <div class="mc-content">
-                            <div class="img-container " style="border-radius:10px 10px 0 0">
-                                <a asp-controller="Patients" asp-action="Details" asp-route-id="@patient.Id">
-                                    <img class="img-responsive" src="https://picsum.photos/id/@random.Next(500)/300/500">
-                                </a>
-                            </div>
-                            <div class="mc-description">
-                                He has appeared in more than 100 films and television shows, including The Deer Hunter, Annie Hall, The Prophecy trilogy, The Dogs of War ...
+
+                <div class="col-xl-3 col-md-4 col-sm-6 col-xs-12">
+                    <main class="page-content">
+                        <div class="card">
+                            @if (patient.PhotoPath != null)
+                            {
+                                <img class="img-responsive " style="position:absolute" src="@photopath">
+                            }
+                            else
+                            {
+                                <img class="img-responsive" style="position:absolute" src="https://picsum.photos/id/@random.Next(500)/500/600">
+                            }
+                            <div class="content py-4 ">
+                                <h2 class="title pb-5">
+                                    @Html.DisplayFor(modelItem => patient.Name)
+                                </h2>
+                                <p class="copy">Check out all of these gorgeous mountain trips with beautiful views of, you guessed it, the mountains</p>
+                                <a asp-controller="Patients" asp-action="Details" asp-route-id="@patient.Id" class="btn">More Detail</a>
                             </div>
                         </div>
-                        <a class="mc-btn-action">
-                            <i class="fa fa-bars"></i>
-                        </a>
-                        <div class="mc-footer">
-                            <h4>
-                                Social
-                            </h4>
-                            <a class="fab fa-fw fa-facebook"></a>
-                            <a class="fab fa-fw fa-twitter"></a>
-                            <a class="fab fa-fw fa-linkedin"></a>
-                            <a class="fab fa-fw fa-google-plus"></a>
-                        </div>
-                    </article>
+                    </main>
                 </div>
             }
         </div>

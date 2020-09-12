@@ -49,10 +49,8 @@ namespace BusinessLogic.Logic
             await _context.SaveChangesAsync();
         }
 
-        public async Task Edit(int id, Patients patients)
+        public async Task Edit(Patients patients)
         {
-            var p = _context.Patients.Find(id);
-            patients.DoctorId = p.DoctorId;
             _context.Update(patients);
             await _context.SaveChangesAsync();
         }

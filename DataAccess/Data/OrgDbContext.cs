@@ -21,6 +21,8 @@ namespace DataAccess.Data
         public DbSet<Patients> Patients { get; set; }
         public DbSet<Specialty> Specialties { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<ContactUs> ContactUs { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

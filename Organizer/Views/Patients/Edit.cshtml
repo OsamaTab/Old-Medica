@@ -4,58 +4,75 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Patients</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="container pt-1">
+    <div class="card my-5 radius">
+        <div class="card-header">
+            <h5 class="title">Create Patient</h5>
+        </div>
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+            <input type="hidden" asp-for="DoctorId" />
+
+            <div class="card-body">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="row px-3">
+
+                    <div class="col-md-5 px-md-1">
+                        <div class="form-group">
+                            <label asp-for="Name" class="control-label"></label>
+                            <input asp-for="Name" class="form-control" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-5 pl-md-1">
+                        <div class="form-group">
+                            <label asp-for="Age" class="control-label"></label>
+                            <input asp-for="Age" class="form-control" />
+                            <span asp-validation-for="Age" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pr-md-1">
+                            <div class="form-group">
+                                <label asp-for="Debt" class="control-label"></label>
+                                <input asp-for="Debt" class="form-control" />
+                                <span asp-validation-for="Debt" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-md-1">
+                            <div class="form-group">
+                                <label asp-for="Payed" class="control-label"></label>
+                                <input asp-for="Payed" class="form-control" />
+                                <span asp-validation-for="Payed" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+
+                                <label asp-for="Description" class="control-label"></label>
+                                <textarea rows="4" cols="180" asp-for="Description" class="form-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+            <div class="pl-3 pb-3 ">
+                <a asp-action="Index">Back to List</a>
             </div>
-            <div class="form-group">
-                <label asp-for="Age" class="control-label"></label>
-                <input asp-for="Age" class="form-control" />
-                <span asp-validation-for="Age" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhotoPath" class="control-label"></label>
-                <input asp-for="PhotoPath" class="form-control" />
-                <span asp-validation-for="PhotoPath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DoctorId" class="control-label"></label>
-                <select asp-for="DoctorId" class="form-control" asp-items="ViewBag.DoctorId"></select>
-                <span asp-validation-for="DoctorId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Debt" class="control-label"></label>
-                <input asp-for="Debt" class="form-control" />
-                <span asp-validation-for="Debt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Payed" class="control-label"></label>
-                <input asp-for="Payed" class="form-control" />
-                <span asp-validation-for="Payed" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="card-footer text-center ">
+                <button type="submit" class="px-4 btn btn-fill btn-primary">Save</button>
             </div>
         </form>
+
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
+
 

@@ -81,7 +81,6 @@ namespace Organizer.Controllers
             {
                 return NotFound();
             }
-
             var patients = await _context.Patients.FindAsync(id);
             if (patients == null)
             {
@@ -92,7 +91,7 @@ namespace Organizer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Age,PhotoPath,Debt,Payed")] Patients patients)
+        public async Task<IActionResult> Edit(int? id, [Bind("Id,Name,Description,Age,PhotoPath,Debt,Payed,DoctorId")] Patients patients)
         {
             if (id != patients.Id)
             {
@@ -103,7 +102,7 @@ namespace Organizer.Controllers
             {
                 try
                 {
-                    await _patientService.Edit(id, patients);
+                   await _patientService.Edit(patients);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -116,7 +115,7 @@ namespace Organizer.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details","Patients",new { id=id });
             }
             return View(patients);
         }
